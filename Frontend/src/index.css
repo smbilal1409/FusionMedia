@@ -1,0 +1,36 @@
+/* src/index.css */
+/* These 3 lines are REQUIRED — Tailwind won't work without them */
+/* Place this file at src/index.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global resets */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #121212;
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+::-webkit-scrollbar-thumb {
+  background: #ae7aff;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9b63e5;
+}

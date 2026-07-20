@@ -1,0 +1,19 @@
+# Backend
+Backend_setup-main/node_modules/
+Backend_setup-main/.env
+Backend_setup-main/Public/temp/*
+!Backend_setup-main/Public/temp/.gitkeep
+# Frontend
+Frontend/node_modules/
+Frontend/.env
+Frontend/dist/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
