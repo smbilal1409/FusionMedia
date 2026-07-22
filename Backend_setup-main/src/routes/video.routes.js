@@ -24,8 +24,5 @@ router.route("/getvideo/:videoid").get(verifyJWT,getvideobyid);
 router.route("/updatevideodetails/:videoid").patch(verifyJWT,upload.single("Thumnil"),updatevideodetails);
 router.route("/deletevideo/:videoid").delete(verifyJWT,deletevideo);
 router.route("/getallvideos").get(verifyJWT, getallvideos);
-// router.get("/getallvideos", (req, res) => {
-//     console.log("GETALLVIDEOS ROUTE HIT");
-//     res.send("Working");
-// });
+
 export default router;

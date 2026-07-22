@@ -18,14 +18,22 @@
 // );
 // src/main.jsx  (or index.js depending on your setup)
 // This is the entry point. Just make sure App is imported here.
-import React from "react";
+
+
+// import React from "react";
+// import ReactDOM from "react-dom/client";
+// import App from "./routers/App.jsx";
+// import "./index.css"; // your Tailwind CSS file
+
+// ReactDOM.createRoot(document.getElementById("root")).render(
+//   <React.StrictMode>
+//     <App />
+//   </React.StrictMode>
+// );
 import ReactDOM from "react-dom/client";
 import App from "./routers/App.jsx";
-import "./index.css"; // your Tailwind CSS file
+import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <App />
 );
-

@@ -1,104 +1,4 @@
 
-// import { useState, useEffect } from "react";
-// import { useLocation, useNavigate } from "react-router-dom";
-// import { getChannelVideos } from "../../services/dashboard.api.js";
-// import VideoCard from "../../components/videocard/videocard.jsx";
-// import Spinner from "../../components/UI/Spinner";
-
-// export default function Search() {
-//   const location = useLocation();
-//   const navigate = useNavigate();
-//   const query = new URLSearchParams(location.search).get("search") || "";
-
-//   const [videos, setVideos] = useState([]);
-//   const [loading, setLoading] = useState(false);
-//   const [localQuery, setLocalQuery] = useState(query);
-
-//   useEffect(() => {
-//     if (!query.trim()) {
-//       setVideos([]);
-//       return;
-//     }
-//     setLoading(true);
-
-//     // Search videos — filter client-side by title/description matching query
-//     getChannelVideos()
-//       .then((res) => {
-//         const all = res.data?.data || [];
-//         const filtered = all.filter((v) =>
-//           v.title?.toLowerCase().includes(query.toLowerCase()) ||
-//           v.description?.toLowerCase().includes(query.toLowerCase())
-//         );
-//         setVideos(filtered);
-//       })
-//       .catch(console.error)
-//       .finally(() => setLoading(false));
-//   }, [query]);
-
-//   const handleSearch = (e) => {
-//     e.preventDefault();
-//     if (localQuery.trim()) {
-//       navigate(`/search?search=${encodeURIComponent(localQuery.trim())}`);
-//     }
-//   };
-
-//   return (
-//     <div className="max-w-5xl mx-auto">
-//       {/* Search bar */}
-//       <form onSubmit={handleSearch} className="flex items-center gap-2 mb-6">
-//         <input
-//           value={localQuery}
-//           onChange={(e) => setLocalQuery(e.target.value)}
-//           placeholder="Search FusionMedia..."
-//           className="flex-1 rounded-full border border-[#333] bg-[#1e1e1e] px-5 py-3 text-white placeholder-gray-500 focus:border-[#ae7aff] focus:outline-none text-sm"
-//         />
-//         <button
-//           type="submit"
-//           className="rounded-full bg-[#ae7aff] px-6 py-3 text-sm font-semibold text-black hover:bg-[#9b63e5] transition"
-//         >
-//           Search
-//         </button>
-//       </form>
-
-//       {/* No query yet */}
-//       {!query && (
-//         <div className="flex flex-col items-center py-24 gap-3 text-center">
-//           <span className="text-5xl">🔍</span>
-//           <p className="text-white font-semibold text-lg">Search FusionMedia</p>
-//           <p className="text-gray-400 text-sm">Find videos by title or description</p>
-//         </div>
-//       )}
-
-//       {/* Loading */}
-//       {query && loading && <Spinner />}
-
-//       {/* Results */}
-//       {query && !loading && (
-//         <>
-//           <p className="text-gray-400 text-sm mb-4">
-//             {videos.length} result{videos.length !== 1 ? "s" : ""} for{" "}
-//             <span className="text-white font-semibold">"{query}"</span>
-//           </p>
-
-//           {videos.length === 0 ? (
-//             <div className="flex flex-col items-center py-20 gap-3 text-center">
-//               <span className="text-5xl">😕</span>
-//               <p className="text-white font-semibold">No results found</p>
-//               <p className="text-gray-400 text-sm">Try different keywords</p>
-//             </div>
-//           ) : (
-//             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-//               {videos.map((v) => (
-//                 <VideoCard key={v._id} video={v} />
-//               ))}
-//             </div>
-//           )}
-//         </>
-//       )}
-//     </div>
-//   );
-// }
-// src/pages/Search/Search.jsx
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getAllVideos } from "../../services/video.api.js";
@@ -127,7 +27,7 @@ export default function Search() {
     getAllVideos()
       .then((res) => {
         const all = res.data?.data || [];
-
+        console.log("ALL VIDEOS:", all.length, "| QUERY:", query, "| SAMPLE OWNER:", all[0]?.owner);
         // Filter videos by title or description
         const filteredVideos = all.filter((v) =>
           v.title?.toLowerCase().includes(query.toLowerCase()) ||

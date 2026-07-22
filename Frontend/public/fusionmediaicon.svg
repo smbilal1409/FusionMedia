@@ -1,0 +1,37 @@
+<svg width="240" height="240" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fmGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c9a8ff"/>
+      <stop offset="55%" stop-color="#ae7aff"/>
+      <stop offset="100%" stop-color="#7c4dff"/>
+    </linearGradient>
+    <linearGradient id="fmGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ae7aff"/>
+      <stop offset="100%" stop-color="#6a3fd6"/>
+    </linearGradient>
+    <linearGradient id="fmTextGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d9c2ff"/>
+      <stop offset="100%" stop-color="#ae7aff"/>
+    </linearGradient>
+    <filter id="fmGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="14" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="240" height="240" rx="54" fill="#141420"/>
+  <rect x="1" y="1" width="238" height="238" rx="53" fill="none" stroke="url(#fmGrad1)" stroke-opacity="0.25" stroke-width="2"/>
+
+  <g filter="url(#fmGlow)">
+    <circle cx="93" cy="93" r="50" fill="url(#fmGrad1)" opacity="0.9"/>
+    <circle cx="148" cy="148" r="50" fill="url(#fmGrad2)" opacity="0.85"/>
+  </g>
+
+  <path d="M82 56 H166 C172.6 56 178 61.4 178 68 C178 74.6 172.6 80 166 80 H106 V112 H154 C160.6 112 166 117.4 166 124 C166 130.6 160.6 136 154 136 H106 V192 C106 198.6 100.6 204 94 204 C87.4 204 82 198.6 82 192 V56 Z"
+        fill="#141420"/>
+  <path d="M82 56 H166 C172.6 56 178 61.4 178 68 C178 74.6 172.6 80 166 80 H106 V112 H154 C160.6 112 166 117.4 166 124 C166 130.6 160.6 136 154 136 H106 V192 C106 198.6 100.6 204 94 204 C87.4 204 82 198.6 82 192 V56 Z"
+        fill="url(#fmTextGrad)"/>
+</svg>

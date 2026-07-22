@@ -8,14 +8,13 @@ export default function Navbar({ onMenuClick }) {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (search.trim()) {
-      navigate(`/?search=${search.trim()}`);
-    }
-  };
-
+const handleSearch = (e) => {
+  e.preventDefault();
+  if (search.trim()) {
+    navigate(`/search?search=${search.trim()}`);  // ← must be /search
+  }
+};
+  
   const handleLogout = async () => {
     await logout();
     navigate("/login");
@@ -38,7 +37,7 @@ export default function Navbar({ onMenuClick }) {
 
         {/* Logo */}
         <img
-          src="/Fusionmedia logo.png"
+          src="/fusionmediaicon.svg"
           alt="FusionMedia"
           className="h-8 w-auto cursor-pointer object-contain"
           onClick={() => navigate("/")}

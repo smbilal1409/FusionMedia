@@ -71,7 +71,7 @@ export default function Subscriptions() {
                   </p>
                   <p className="text-gray-400 text-xs">@{channel.username}</p>
                   <p className="text-gray-500 text-xs mt-0.5">
-                    {channel.subscribersCount || 0} subscriber{channel.subscribersCount !== 1 ? "s" : ""}
+                    {channel.subscriberscount || 0} subscriber{channel.subscriberscount !== 1 ? "s" : ""}
                   </p>
                 </div>
               </div>

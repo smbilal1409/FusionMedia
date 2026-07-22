@@ -9,3 +9,6 @@ export const updateComment = (commentId, data) =>
 
 export const deleteComment = (commentId) =>
   api.delete(`/comment/deletecomment/${commentId}`);
+
+export const getcomments = (videoId) =>
+  api.get(`/comment/getcomments/${videoId}`);

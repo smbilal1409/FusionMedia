@@ -147,34 +147,7 @@ const logoutuser = asynchandlerfunction(async (req, res) => {
         throw new ApiError(500, "Logout failed");
     }
 });
-// const refreshaccesstoken = asynchandlerfunction(async (req, res) => {
-//     const incomingrefreshtoken = req.cookie.accessToken || req.body.refreshToken;
-//     if (!incomingrefreshtoken) {
-//         throw new ApiError(404, "unathorized request");
-//     }
-//     try {
-//         const decodedrefreshtoken = jwt.verify(incomingrefreshtoken, process.env.REFRESH_TOKEN_SECRET);
-//         const user = await User.findById(decodedrefreshtoken._id);
-//         if (!user) {
-//             throw new ApiError(404, "unathorized request");
-//         }
-//         if (user.refreshToken === incomingrefreshtoken) {
-//             throw new ApiError(404, "incoming and db refresh token does not match");
-//         }
-//         const { accessToken, refreshToken } = await accessandrefreshtokenfunction(user._id);
-//         const options = {
-//             httpOnly: true,
-//             secure: true,
-//         };
-//         return res.status(200)
-//             .cookie("accessToken", accessToken, option)
-//             .cookie("refreshToken", refreshToken, option)
-//             .json(new ApiResponse(200, { accessToken, refreshToken }, "accesstoken successfully sent"));
-//     } catch (error) {
-//         throw new ApiError(404, error?.message || "invalid refreshtoken");
 
-//     }
-// })
 const refreshaccesstoken = asynchandlerfunction(async (req, res) => {
 console.log("========== REFRESH TOKEN ==========");
 console.log("Cookies:", req.cookies);
@@ -247,30 +220,7 @@ console.log(user?.refreshToken);
     }
 
 });
-// const changethepassword = asynchandlerfunction(async (req, res) => {
-//     console.log("========== CHANGE PASSWORD ==========");
-// console.log("Request Body:", req.body);
-// console.log("Body Keys:", Object.keys(req.body));
-//     const { oldpassword, newpassword } = req.body;
-//     const user = await User.findById(req.user._id);
-//     if (!user) {
-//         throw new ApiError(404, "user is not found");
 
-//     }
-//     console.log("Old Password:", oldpassword);
-//     console.log("User Password Hash:", user.password);
-//     console.log("User Object:", user); 
-//     const isPasswordCorrect = await user.isPasswordCorrect(oldpassword);
-//     if (!isPasswordCorrect) {
-//         throw new ApiError(403, "password is incorrect");
-//     }
-//     user.password = newpassword;
-//     await user.save({ validateBeforeSave: false })
-//     return res.status(200).json({
-//         success: true,
-//         message: "Password changed successfully"
-//     });
-// })
 const changethepassword = asynchandlerfunction(async (req, res) => {
 
     // Frontend sends oldPassword and newPassword
@@ -504,7 +454,7 @@ const getwatchhistory = asynchandlerfunction(async (req, res) => {
     if (!user.length) {
         throw new ApiError(404, "User not found");
     }
-    
+    user[0].watchhistory.reverse();
     res.status(200).json(
         new ApiResponse(200, user[0].watchhistory, "Watch history successfully sent")
     );

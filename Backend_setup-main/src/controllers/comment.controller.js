@@ -61,8 +61,28 @@ const deletecomment=asynchandlerfunction(async(req,res)=>{
     return res.status(200)
     .json(new ApiResponse(200,deletecomment,"comment deleted successfully"))
 })
+const getVideoComments = asynchandlerfunction(async (req, res) => {
+    const { videoid } = req.params;
+
+    if (!videoid) {
+        throw new ApiError(400, "Video ID is required");
+    }
+
+    const comments = await Comment.find({
+        video: videoid
+    }).populate("owner", "username fullname avatar").sort({ createdAt: -1 });
+
+    return res.status(200).json(
+        new ApiResponse(
+            200,
+            comments,
+            "Comments fetched successfully"
+        )
+    );
+});
 export {
 addcomment,
 updatecomment,
-deletecomment
+deletecomment,
+getVideoComments
 } 

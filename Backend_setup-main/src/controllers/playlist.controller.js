@@ -30,17 +30,6 @@ const getUserPlaylists = asynchandlerfunction(async (req, res) => {
     .json(new ApiResponse(200,playlists,"playlist of the user successfully sended"));
 })
 
-// const getPlaylistById = asynchandlerfunction(async (req, res) => {
-//     const {playlistId} = req.params;
-//     const playist=await Playlist.findById(playlistId);
-//     if(!playist){
-//         throw new ApiError(404,"Playlist not found")
-//     }
-//     return res.status(200)
-//     .json(new ApiResponse(200,playist,"playlist has been sended by id"));
-// })
-// In your backend: controllers/playlist.controller.js
-// Replace your getPlaylistById with this:
 
 const getPlaylistById = asynchandlerfunction(async (req, res) => {
     const { playlistId } = req.params;

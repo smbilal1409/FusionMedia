@@ -34,14 +34,27 @@ const getUserChannelSubscribers = asynchandlerfunction(async (req, res) => {
 return res.status(200)
 .json(new ApiResponse(200,subscriberslist,"subscriber list successfully sended"))
 })
+
 const getSubscribedChannels = asynchandlerfunction(async (req, res) => {
-    const { subscriberId } = req.params
-    const channelsubscribed=await Subscription.find({
-subscriber:subscriberId
-    }).populate("channel","username fullname email")
-    return res.status(200)
-.json(new ApiResponse(200,channelsubscribed,"subscribed channel list successfully fetched"))
-})
+    const { subscriberId } = req.params;
+
+    const subscriptions = await Subscription.find({
+        subscriber: subscriberId
+    }).populate(
+        "channel",
+        "username fullname email avatar coverimage"
+    );
+
+    const channels = subscriptions.map((sub) => sub.channel);
+
+    return res.status(200).json(
+        new ApiResponse(
+            200,
+            channels,
+            "Subscribed channels fetched successfully"
+        )
+    );
+});
 export {togglesubscription,
     getUserChannelSubscribers,
     getSubscribedChannels

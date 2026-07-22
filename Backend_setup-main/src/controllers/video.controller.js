@@ -4,6 +4,9 @@ import ApiError from "../utils/Apierror.js";
 import ApiResponse from "../utils/Apiresponse.js";
 import { Video } from "../models/videos.models.js";
 import uploadoncloudinary from "../utils/cloudinary.js";
+import { Comment } from "../models/comments.models.js";
+import {Like} from "../models/likes.model.js";
+import {Subscription} from "../models/subscription.model.js";
 const uploadvideo=asynchandlerfunction(async(req,res)=>{
 const{title ,description,ispublished=true}=req.body;
 if(!title || !description){
@@ -47,21 +50,63 @@ res.status(200)
 })
 
 
+
+
 const getvideobyid = asynchandlerfunction(async (req, res) => {
     const { videoid } = req.params;
+    const userId = req.user._id;
+
+    // ✅ Increment view count
+    await Video.findByIdAndUpdate(
+        videoid,
+        { $inc: { views: 1 } }
+    );
+
+    // ✅ Get video with owner details
     const video = await Video.findById(videoid)
         .populate("owner", "username fullName avatar subscribersCount");
-    if (!video) {
-        throw new ApiError(401, "video is not found");
-    }
-    await User.findByIdAndUpdate(req.user._id, {
-        $addToSet: { watchhistory: videoid }
-    });
-    const updatedUser = await User.findById(req.user._id);
 
-    console.log(updatedUser.watchhistory);
-return res.status(200)
-        .json(new ApiResponse(200, video, "video successfully sended"));
+    if (!video) throw new ApiError(401, "video is not found");
+
+    // ✅ Get comments with owner details
+    const comments = await Comment.find({ video: videoid })
+        .populate("owner", "username fullName avatar")
+        .sort({ createdAt: -1 });
+
+    // ✅ Check if current user liked this video
+    const isLiked = await Like.findOne({ video: videoid, likedby: userId });
+    const likesCount = await Like.countDocuments({ video: videoid });
+
+    // ✅ Check if current user is subscribed to video owner
+    const isSubscribed = await Subscription.findOne({
+        channel: video.owner._id,
+        subscriber: userId
+    });
+
+    // ✅ Save to watch history
+    console.log("USER ID →", userId);
+    console.log("VIDEO ID →", videoid);
+
+    const result = await User.findByIdAndUpdate(
+        userId,
+        { $addToSet: { watchhistory: videoid } },
+        { new: true }
+    );
+
+    console.log("WATCH HISTORY AFTER UPDATE →", result?.watchhistory);
+
+    return res.status(200).json(
+        new ApiResponse(200, {
+            ...video.toObject(),
+            comments,
+            isLiked: !!isLiked,       // ✅ true/false
+            likesCount,                 // ✅ exact count
+            owner: {
+                ...video.owner.toObject(),
+                isSubscribed: !!isSubscribed  // ✅ subscribe status persists
+            }
+        }, "video successfully sended")
+    );
 });
 const updatevideodetails=asynchandlerfunction(async(req,res)=>{
     const {videoid}=req.params;
@@ -116,13 +161,31 @@ const deletevideo=asynchandlerfunction(async(req,res)=>{
     const deletedvideo=await Video.findByIdAndDelete(videoid);
     res.status(200).json(new ApiResponse(200,deletedvideo,"video successfully deleted"))
 })
+
 const getallvideos = asynchandlerfunction(async (req, res) => {
+    const userId = req.user._id;
+ 
     const videos = await Video.find({ ispublished: true })
         .populate("owner", "username fullName avatar")
         .sort({ createdAt: -1 });
-    
+ 
+    // ✅ For each video, check if current user has liked it
+    const videosWithLikeStatus = await Promise.all(
+        videos.map(async (video) => {
+            const isLiked = await Like.findOne({
+                video: video._id,
+                likedby: userId
+            });
+            return {
+                ...video.toObject(),
+                isLiked: !!isLiked,
+                likesCount: await Like.countDocuments({ video: video._id })
+            };
+        })
+    );
+ 
     return res.status(200)
-        .json(new ApiResponse(200, videos, "All videos fetched successfully"));
+        .json(new ApiResponse(200, videosWithLikeStatus, "All videos fetched successfully"));
 });
 export {uploadvideo,
     getvideobyid,

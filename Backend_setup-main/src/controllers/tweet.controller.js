@@ -3,7 +3,7 @@ import { User } from "../models/user.models.js";
 import ApiError from "../utils/Apierror.js";
 import ApiResponse from "../utils/Apiresponse.js";
 import { Tweet } from "../models/tweets.models.js";
-
+import { Like } from "../models/likes.model.js";
 const createTweets=asynchandlerfunction(async(req,res)=>{
     const{content}=req.body;
     if(!content){
@@ -68,14 +68,33 @@ const deletetweets=asynchandlerfunction(async(req,res)=>{
     );
 
 })
+
 const getalltweets = asynchandlerfunction(async (req, res) => {
+    const userId = req.user._id;
+ 
     const tweets = await Tweet.find()
         .populate("owner", "username fullName avatar")
         .sort({ createdAt: -1 });
-    
+ 
+    // ✅ For each tweet, check if current user has liked it
+    const tweetsWithLikeStatus = await Promise.all(
+        tweets.map(async (tweet) => {
+            const isLiked = await Like.findOne({
+                tweet: tweet._id,
+                likedby: userId
+            });
+            return {
+                ...tweet.toObject(),
+                isLiked: !!isLiked,
+                likesCount: await Like.countDocuments({ tweet: tweet._id })
+            };
+        })
+    );
+ 
     return res.status(200)
-        .json(new ApiResponse(200, tweets, "All tweets fetched successfully"));
+        .json(new ApiResponse(200, tweetsWithLikeStatus, "All tweets fetched successfully"));
 });
+ 
 export{createTweets
       ,getthetweets
       ,updatethetweets,
