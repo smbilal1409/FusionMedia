@@ -1,6 +1,4 @@
-// src/Hooks/useauth.js
-// You already have this file — replace it with this cleaner version
-// that reads from AuthContext instead of calling the API directly.
+
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 

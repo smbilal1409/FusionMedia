@@ -1,9 +1,7 @@
-// src/components/Playlist/AddToPlaylistModal.jsx
-// Shows on a video — lets user add/remove video from their playlists.
-// Usage: <AddToPlaylistModal videoId={video._id} onClose={() => setShow(false)} />
 
 import { useState, useEffect } from "react";
 import { useAuth } from "../../Hooks/useauth.js";
+import toast from "react-hot-toast";
 import {
   getUserPlaylists,
   addVideosToPlaylist,
@@ -51,7 +49,7 @@ export default function AddToPlaylistModal({ videoId, onClose }) {
         );
       }
     } catch {
-      alert("Failed to update playlist");
+      toast.error("Failed to update playlist");
     } finally {
       setUpdating(null);
     }

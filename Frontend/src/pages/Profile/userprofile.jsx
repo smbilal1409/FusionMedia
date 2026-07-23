@@ -9,6 +9,7 @@ import { getTweets } from "../../services/tweet.api.js";
 import { getUserPlaylists } from "../../services/playlist.api.js";
 import VideoCard from "../../components/videocard/videocard.jsx";
 import TweetCard from "../../components/Tweetcard/tweetcard.jsx";
+import toast from "react-hot-toast";
 
 const TABS = ["Videos", "Tweets", "Playlists", "About"];
 
@@ -85,7 +86,7 @@ const handleSubscribe = async () => {
       return !prev;
     });
   } catch {
-    alert("Failed to toggle subscription");
+    toast.error("Failed to toggle subscription");
   }
 };
 

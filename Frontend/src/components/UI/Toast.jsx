@@ -1,10 +1,3 @@
-// src/components/UI/Toast.jsx
-// A simple toast system to replace ugly browser alert() calls.
-// Usage:
-//   import { useToast } from "../../components/UI/Toast";
-//   const toast = useToast();
-//   toast.success("Video uploaded!");
-//   toast.error("Something went wrong");
 
 import { createContext, useContext, useState, useCallback } from "react";
 

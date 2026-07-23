@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../../Hooks/useauth.js";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const { login } = useAuth();
@@ -25,10 +26,10 @@ export default function Login() {
           res.data?.message ||
           res.data?.data?.message ||
           "Login successful!";
-        alert(message);
+        toast.success(message);
         navigate("/");
       } else {
-        alert("Login failed with status " + res.status);
+        toast.error("Login failed with status " + res.status);
       }
     } catch (err) {
       const errorMessage =
@@ -36,7 +37,7 @@ export default function Login() {
         err.response?.data?.error ||
         err.response?.statusText ||
         "Login failed";
-      alert("Error: " + errorMessage);
+      toast.error("Error: " + errorMessage);
     }
   };
 

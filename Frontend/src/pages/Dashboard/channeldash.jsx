@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getChannelStats, getChannelVideos } from "../../services/dashboard.api.js";
 import { deleteVideo } from "../../services/video.api.js";
-
+import toast from "react-hot-toast";
 function formatCount(num) {
   if (!num) return "0";
   if (num >= 1_000_000) return (num / 1_000_000).toFixed(1) + "M";
@@ -40,7 +40,7 @@ export default function ChannelDash() {
       await deleteVideo(videoId);
       setVideos((prev) => prev.filter((v) => v._id !== videoId));
     } catch {
-      alert("Failed to delete video");
+      toast.error("Failed to delete video");
     }
   };
 

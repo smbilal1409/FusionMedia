@@ -1,8 +1,9 @@
-// src/pages/Subscriptions/Subscriptions.jsx
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Hooks/useauth.js";
 import { getSubscribedChannels, toggleSubscription } from "../../services/subscription.api.js";
+import toast from "react-hot-toast";
 
 export default function Subscriptions() {
   const { user } = useAuth();
@@ -23,7 +24,7 @@ export default function Subscriptions() {
       await toggleSubscription(channelId);
       setChannels((prev) => prev.filter((c) => c._id !== channelId));
     } catch {
-      alert("Failed to unsubscribe");
+      toast.error("Failed to unsubscribe");
     }
   };
 

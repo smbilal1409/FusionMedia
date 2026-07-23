@@ -7,6 +7,7 @@ import { toggleVideoLike } from "../../services/like.api.js";
 import { toggleSubscription } from "../../services/subscription.api.js";
 import CommentSection from "../../components/commentsection/commentslist.jsx";
 import AddToPlaylistModal from "../../components/Playlist/AddToPlaylistModal.jsx";
+import toast from "react-hot-toast";
 function formatViews(num) {
   if (!num) return "0";
   if (num >= 1_000_000) return (num / 1_000_000).toFixed(1) + "M";
@@ -56,7 +57,7 @@ export default function VideoPlayer() {
       setLiked(!liked);
       setLikeCount((c) => (liked ? c - 1 : c + 1));
     } catch {
-      alert("Failed to toggle like");
+      toast.error("Failed to toggle like");
     }
   };
  
@@ -65,13 +66,13 @@ export default function VideoPlayer() {
       typeof video?.owner === "object"
         ? video.owner._id
         : video?.owner;
-    if (!ownerId) return alert("Cannot subscribe — owner info missing");
+    if (!ownerId) return toast.error("Cannot subscribe — owner info missing");
     try {
       await toggleSubscription(ownerId);
       setSubscribed(!subscribed);
       setSubCount((c) => (subscribed ? c - 1 : c + 1));
     } catch {
-      alert("Failed to toggle subscription");
+      toast.error("Failed to toggle subscription");
     }
   };
  

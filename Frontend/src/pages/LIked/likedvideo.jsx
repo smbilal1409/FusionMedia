@@ -1,4 +1,4 @@
-// src/pages/Liked/LikedVideos.jsx
+
 import { useState, useEffect } from "react";
 import { getLikedVideos } from "../../services/like.api.js";
 import VideoCard from "../../components/videocard/videocard.jsx";

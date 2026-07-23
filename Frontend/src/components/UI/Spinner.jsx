@@ -1,5 +1,4 @@
-// src/components/UI/Spinner.jsx
-// Usage: <Spinner /> or <Spinner fullScreen />
+
 export default function Spinner({ fullScreen = false }) {
   if (fullScreen) {
     return (

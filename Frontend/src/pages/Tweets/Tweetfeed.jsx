@@ -1,9 +1,9 @@
-// src/pages/Tweets/TweetFeed.jsx
+
 import { useState, useEffect } from "react";
 import { useAuth } from "../../Hooks/useauth.js";
 import { getTweets, createTweet, updateTweet, deleteTweet } from "../../services/tweet.api.js";
 import TweetCard from "../../components/Tweetcard/tweetcard.jsx";
-
+import toast from "react-hot-toast";
 export default function TweetFeed() {
   const { user } = useAuth();
   const [tweets, setTweets] = useState([]);
@@ -29,7 +29,7 @@ export default function TweetFeed() {
       setTweets((prev) => [newTweet, ...prev]);
       setContent("");
     } catch {
-      alert("Failed to post tweet");
+      toast.error("Failed to post tweet");
     } finally {
       setPosting(false);
     }
@@ -45,7 +45,7 @@ export default function TweetFeed() {
     console.log(error.response);
     console.log(error.response?.data);
 
-    alert("Failed to post tweet");
+    toast.error("Failed to post tweet");
 }
   };
 
@@ -170,7 +170,7 @@ function EditModal({ tweet, user, onClose, onUpdated }) {
       const res = await updateTweet(user.username, tweet._id, { content });
       onUpdated(res.data?.data || { ...tweet, content });
     } catch {
-      alert("Failed to update tweet");
+      toast.error("Failed to update tweet");
     } finally {
       setSaving(false);
     }

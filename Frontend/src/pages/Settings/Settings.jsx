@@ -1,7 +1,7 @@
-// src/pages/Settings/Settings.jsx
+
 import { useState } from "react";
 import { useAuth } from "../../Hooks/useauth";
-
+import toast from "react-hot-toast";
 import {
   changePassword,
   updateAccountDetails,
@@ -64,7 +64,7 @@ function AccountTab({ user, setUser }) {
       setUser((prev) => ({ ...prev, ...res.data?.data }));
       setSuccess("Account updated successfully!");
     } catch (err) {
-      alert(err.response?.data?.message || "Update failed");
+      toast.error(err.response?.data?.message || "Update failed");
     } finally {
       setSaving(false);
     }
@@ -131,7 +131,7 @@ function PasswordTab() {
   const handleSave = async (e) => {
     e.preventDefault();
     if (form.newPassword !== form.confirmPassword) {
-      return alert("New passwords don't match");
+      return toast.error("New passwords don't match");
     }
     setSaving(true);
     setSuccess("");
@@ -140,7 +140,7 @@ function PasswordTab() {
       setSuccess("Password changed successfully!");
       setForm({ oldPassword: "", newPassword: "", confirmPassword: "" });
     } catch (err) {
-      alert(err.response?.data?.message || "Failed to change password");
+      toast.error(err.response?.data?.message || "Failed to change password");
     } finally {
       setSaving(false);
     }
@@ -191,23 +191,7 @@ function MediaTab({ user, setUser }) {
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
   const [uploadingCover, setUploadingCover] = useState(false);
 
-  // const handleAvatarChange = async (e) => {
-  //   const file = e.target.files[0];
-  //   if (!file) return;
-  //   setAvatarPreview(URL.createObjectURL(file));
-  //   setUploadingAvatar(true);
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append("avatar", file);
-  //     const res = await updateAvatar(formData);
-  //     setUser((prev) => ({ ...prev, avatar: res.data?.data?.avatar }));
-  //     alert("Avatar updated!");
-  //   } catch {
-  //     alert("Failed to update avatar");
-  //   } finally {
-  //     setUploadingAvatar(false);
-  //   }
-  // };
+
 const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
 
@@ -239,14 +223,14 @@ const handleAvatarChange = async (e) => {
             avatar: res.data?.data?.avatar
         }));
 
-        alert("Avatar updated!");
+        toast.success("Avatar updated!");
     } catch (error) {
 
         console.log("FULL ERROR:", error);
         console.log("ERROR RESPONSE:", error.response);
         console.log("ERROR DATA:", error.response?.data);
 
-        alert("Failed to update avatar");
+        toast.error("Failed to update avatar");
     } finally {
         setUploadingAvatar(false);
     }
@@ -261,9 +245,9 @@ const handleAvatarChange = async (e) => {
       formData.append("coverimage", file);
       const res = await updateCoverImage(formData);
       setUser((prev) => ({ ...prev, coverimage: res.data?.data?.coverimage }));
-      alert("Cover image updated!");
+      toast.success("Cover image updated!");
     } catch {
-      alert("Failed to update cover image");
+      toast.error("Failed to update cover image");
     } finally {
       setUploadingCover(false);
     }

@@ -1,7 +1,8 @@
-// src/pages/Video/UploadVideo.jsx
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { uploadVideo } from "../../services/video.api.js";
+import toast from "react-hot-toast";
 
 export default function UploadVideo() {
   const navigate = useNavigate();
@@ -30,8 +31,8 @@ export default function UploadVideo() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!videoFile) return alert("Please select a video file");
-    if (!thumbnail) return alert("Please select a thumbnail");
+    if (!videoFile) return toast.error("Please select a video file");
+    if (!thumbnail) return toast.error("Please select a thumbnail");
 
     setUploading(true);
     setProgress(0);
@@ -55,7 +56,7 @@ export default function UploadVideo() {
       setTimeout(() => navigate("/"), 800);
     } catch (err) {
       const msg = err.response?.data?.message || "Upload failed";
-      alert("Error: " + msg);
+      toast.error("Error: " + msg);
     } finally {
       setUploading(false);
     }

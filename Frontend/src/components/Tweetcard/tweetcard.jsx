@@ -1,5 +1,4 @@
-// src/components/TweetCard/TweetCard.jsx
-// Reusable tweet card used in Home feed and Tweets page.
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toggleTweetLike } from "../../services/like.api.js";

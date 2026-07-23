@@ -48,10 +48,6 @@ const videoWithOwner = await Video.findById(video._id).populate("owner", "userna
 res.status(200)
 .json(new ApiResponse(200,videoWithOwner,"video uploaded successfully"))
 })
-
-
-
-
 const getvideobyid = asynchandlerfunction(async (req, res) => {
     const { videoid } = req.params;
     const userId = req.user._id;

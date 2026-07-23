@@ -1,5 +1,4 @@
-// src/pages/Playlist/PlaylistsList.jsx
-// Main playlists page — shows all your playlists, lets you create new ones.
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Hooks/useauth";

@@ -1,6 +1,4 @@
-/* src/index.css */
-/* These 3 lines are REQUIRED — Tailwind won't work without them */
-/* Place this file at src/index.css */
+
 
 @tailwind base;
 @tailwind components;

@@ -1,9 +1,3 @@
-// src/components/Playlist/CreatePlaylistModal.jsx
-// A reusable modal — call it from Profile page, Video page, or anywhere.
-// Usage:
-//   const [showCreate, setShowCreate] = useState(false);
-//   <button onClick={() => setShowCreate(true)}>New Playlist</button>
-//   {showCreate && <CreatePlaylistModal onClose={() => setShowCreate(false)} onCreated={(pl) => ...} />}
 
 import { useState } from "react";
 import { createPlaylist } from "../../services/playlist.api.js";

@@ -1,4 +1,4 @@
-// src/App.jsx
+
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "../context/AuthContext.jsx";
 import ProtectedRoute from "../routers/protectedroutes.jsx";
@@ -22,6 +22,9 @@ import PlaylistView  from "../pages/Playlist/playlistview.jsx";
 import { ToastProvider } from "../components/UI/Toast.jsx";
 import PlaylistsList from "../pages/Playlist/playlistlist.jsx";
 import Search        from "../pages/Search/Search.jsx";
+import About from "../pages/About/About.jsx";
+
+// Add this route:
 // import NotFound      from "./pages/NotFound";
 
 const ProtectedPage = ({ children }) => (
@@ -54,6 +57,7 @@ export default function App() {
             <Route path="/playlists" element={<ProtectedPage><PlaylistsList /></ProtectedPage>} />
           <Route path="/playlist/:playlistId" element={<ProtectedPage><PlaylistView /></ProtectedPage>} />
             <Route path="/search"               element={<ProtectedPage><Search /></ProtectedPage>} />
+           <Route path="/about" element={<ProtectedPage><About /></ProtectedPage>} />
 
             {/* 404 */}
          <Route path="*" element={<Navigate to="/" replace />} />

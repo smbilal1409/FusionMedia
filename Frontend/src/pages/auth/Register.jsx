@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../../services/auth.api.js";
-
+import toast from "react-hot-toast";
 export default function Register() {
   const navigate = useNavigate();
 
@@ -39,7 +39,7 @@ export default function Register() {
 
     // Avatar is required
     if (!avatar) {
-      alert("Please upload a profile picture to continue.");
+      toast.error("Please upload a profile picture to continue.");
       return;
     }
 
@@ -54,14 +54,14 @@ export default function Register() {
       if (coverImage) formData.append("coverimage", coverImage);
 
       await registerUser(formData);
-      alert("Account created! Please login.");
+      toast.success("Account created! Please login.");
       navigate("/login");
     } catch (err) {
       const msg =
         err.response?.data?.message ||
         err.response?.data?.error ||
         "Registration failed";
-      alert("Error: " + msg);
+      toast.error("Error: " + msg);
     } finally {
       setLoading(false);
     }

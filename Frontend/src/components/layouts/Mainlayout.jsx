@@ -1,7 +1,4 @@
-// src/components/Layout/MainLayout.jsx
-// This is the SHELL that wraps every page after login.
-// Usage: wrap any page with <MainLayout> in App.jsx
-// It handles the Navbar at top, Sidebar on left, and the page content on right.
+
 import { useState } from "react";
 import Navbar from "./navbar";
 import Sidebar from "./sidebar";
