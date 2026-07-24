@@ -192,7 +192,7 @@ console.log(user?.refreshToken);
         const options = {
             httpOnly: true,
             secure: true, // use false during local HTTP development if needed
-            sameSite: "lax"
+            sameSite: "none"
         };
 
         return res
