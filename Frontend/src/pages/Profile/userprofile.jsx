@@ -86,7 +86,7 @@ const handleSubscribe = async () => {
       return !prev;
     });
   } catch {
-    toast.error("Failed to toggle subscription");
+    toast.err("Failed to toggle subscription");
   }
 };
 
