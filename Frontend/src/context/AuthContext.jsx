@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
       
       if (accessToken) {
         localStorage.setItem("accessToken", accessToken);
-        if (refreshToken) localStorage.setItem("refreshToken", refreshToken);
+        localStorage.setItem("refreshToken", refreshToken);
         
         // Get current user info after successful login
         const current = await authAPI.getCurrentUser();

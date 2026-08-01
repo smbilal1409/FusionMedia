@@ -100,7 +100,8 @@ const loginuser = asynchandlerfunction(async (req, res) => {
     const loggedinuser = await User.findById(userexisted._id).select("-password -refreshtoken");
     const option = {
         httpOnly: true,
-        secure: true
+        secure: true,
+        sameSite: "none",
     }
     return res.status(200)
         .cookie("accessToken", accessToken, option)
@@ -153,7 +154,7 @@ console.log("========== REFRESH TOKEN ==========");
 console.log("Cookies:", req.cookies);
 console.log("Body:", req.body);
     const incomingRefreshToken =
-        req.cookies?.refreshToken || req.body.refreshToken;
+        req.cookies?.refreshToken || req.body?.refreshToken;
 
 
     if (!incomingRefreshToken) {

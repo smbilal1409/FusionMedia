@@ -28,9 +28,10 @@ api.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
+        const refreshToken = localStorage.getItem("refreshToken");
         const res = await axios.post(
           `${BASE_URL}/user/refresh_token`,
-          {},
+          {refreshToken},
           { withCredentials: true }
         );
 
